@@ -39,7 +39,7 @@ const CONFIG_ROUTES: Routes = [
   ],
   imports: [
     BrowserModule.withServerTransition(CONFIG_BROWSER),
-    // AuthModule.forRoot(CONFIG_AUTH),
+    AuthModule.forRoot(CONFIG_AUTH),
     FormsModule,
     HttpClientModule,
     RouterModule.forRoot(CONFIG_ROUTES),
