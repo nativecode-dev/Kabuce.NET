@@ -1,18 +1,18 @@
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
+using Kabuce.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kabuce.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/accounts")]
     public class AccountController : ControllerBase
     {
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<string>), StatusCodes.Status200OK)]
         public IActionResult Get()
         {
-            return Ok(new List<string>());
+            return Ok(new {Email = User.GetClaimEmail(), Username = User.Identity.Name});
         }
     }
 }

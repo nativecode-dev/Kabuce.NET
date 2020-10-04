@@ -1,23 +1,37 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace Kabuce
 {
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class Program
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            try
+            {
+                CreateHostBuilder(args).Build().Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, ex.Message);
+            }
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((context, builder) =>
+                {
+                    Log.Logger = new LoggerConfiguration().MinimumLevel.Debug().ReadFrom
+                        .Configuration(context.Configuration).WriteTo
+                        .Console().CreateLogger();
+                })
+                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseSerilog().UseStartup<Startup>(); });
+        }
     }
 }

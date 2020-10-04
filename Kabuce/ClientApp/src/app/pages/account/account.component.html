@@ -1,0 +1,7 @@
+<ul *ngIf="user | async as user">
+  <li>Name: {{ user.name }}</li>
+  <li>Email: {{ user.email }}</li>
+  <li>Verified: {{ user.email_verified }}</li>
+</ul>
+
+<button (click)="do_stuff()">Do stuff</button>

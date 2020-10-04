@@ -1,7 +1,36 @@
 <body>
-<app-auth></app-auth>
-<app-nav-menu></app-nav-menu>
-<div class="container">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#" routerLink="" *ngIf="(auth.isAuthenticated$ | async) == false">Kabuce</a>
+  <a class="navbar-brand" href="#" routerLink="" *ngIf="auth.user$ | async as user">
+    <img height="28" width="28" src="{{user.picture}}" alt="{{user.name}}" />
+  </a>
+
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav mr-auto" routerLinkActive="active">
+      <li class="nav-item" *ngIf="(auth.isAuthenticated$ | async) == true">
+        <a class="nav-link" href="#" routerLink="dashboard">Dashboard</a>
+      </li>
+
+      <li class="nav-item" *ngIf="(auth.isAuthenticated$ | async) == false">
+        <a class="nav-link" href="#" (click)="login()">Login</a>
+      </li>
+
+      <li class="nav-item" *ngIf="(auth.isAuthenticated$ | async) == true">
+        <a class="nav-link" href="#" routerLink="account">Account</a>
+      </li>
+
+      <li class="nav-item" *ngIf="(auth.isAuthenticated$ | async) == true">
+        <a class="nav-link" href="#" (click)="logout()">Logout</a>
+      </li>
+    </ul>
+
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+<div class="router">
   <router-outlet></router-outlet>
 </div>
 </body>

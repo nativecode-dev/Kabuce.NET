@@ -1,10 +1,21 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
 export const environment = {
+  auth: {
+    audience: 'https://iam.nativecode.com',
+    clientId: 'wJIoxT5xfrFIcXqVn38jLG5Vhi40gWV1',
+    domain: 'dev-acljxp0j.auth0.com',
+    httpInterceptor: {
+      allowedList: [
+        {
+          uri: '/api/*'
+        }
+      ]
+    }
+  },
+  browser: {
+    appId: 'Kabuce'
+  },
   production: false
-};
+}
 
 /*
  * In development mode, to ignore zone related error stack frames such as
@@ -12,4 +23,4 @@ export const environment = {
  * import the following file, but please comment it out in production mode
  * because it will have performance impact when throw error
  */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+import 'zone.js/dist/zone-error'
