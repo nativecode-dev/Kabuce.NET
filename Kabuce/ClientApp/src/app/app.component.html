@@ -15,8 +15,24 @@
         <a class="nav-link" href="#" (click)="login()">Login</a>
       </li>
 
+      <li class="nav-item" *ngIf="(auth.isAuthenticated$ | async) == false">
+        <a class="nav-link" href="#" routerLink="register">Register</a>
+      </li>
+
+      <li class="nav-item" *ngIf="(auth.isAuthenticated$ | async) == false">
+        <a class="nav-link" href="#" routerLink="pricing">Pricing</a>
+      </li>
+
       <li class="nav-item" *ngIf="(auth.isAuthenticated$ | async) == true">
         <a class="nav-link" href="#" routerLink="account">Account</a>
+      </li>
+
+      <li class="nav-item" *ngIf="(auth.isAuthenticated$ | async) == true">
+        <a class="nav-link" href="#" routerLink="organization">Organization</a>
+      </li>
+
+      <li class="nav-item" *ngIf="(auth.isAuthenticated$ | async) == false">
+        <a class="nav-link" href="#" routerLink="support">Support</a>
       </li>
 
       <li class="nav-item" *ngIf="(auth.isAuthenticated$ | async) == true">

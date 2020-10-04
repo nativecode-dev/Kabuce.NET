@@ -11,6 +11,12 @@
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
     <UserSecretsId>bc8fea28-ebe6-424c-8de0-f5d1c2791417</UserSecretsId>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CouchDB.NET" Version="2.1.0" />
     <PackageReference Include="CouchDB.NET.DependencyInjection" Version="2.1.0" />
@@ -23,6 +29,7 @@
     <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
     <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
     <PackageReference Include="Strathweb.AsyncExpiringLazy" Version="2.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="5.6.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.6.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="5.6.3" />
   </ItemGroup>
@@ -60,5 +67,9 @@
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       </ResolvedFileToPublish>
     </ItemGroup>
+  </Target>
+  <Target Name="SwaggerGenerator" AfterTargets="Build">
+    <Exec WorkingDirectory="$(SolutionDir)" Command="dotnet swagger tofile --output Kabuce/wwwroot/swagger.json Kabuce/$(OutDir)Kabuce.dll v1" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="node_modules/.bin/ng-openapi-gen --input ../wwwroot/swagger.json --output src/app/api" />
   </Target>
 </Project>

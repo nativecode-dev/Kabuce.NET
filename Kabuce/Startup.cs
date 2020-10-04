@@ -64,7 +64,7 @@ namespace Kabuce
                         new string[] { }
                     }
                 });
-            });
+            }).AddSwaggerGenNewtonsoftSupport();
 
             var domain = $"https://{_configuration["Auth0:Domain"]}/";
 
@@ -101,9 +101,11 @@ namespace Kabuce
 
             services.AddCouchContext<DataContext>(options =>
             {
-                options.UseEndpoint(_configuration["CouchConfig:Endpoint"]).UseBasicAuthentication(
-                    _configuration["CouchConfig:Username"],
-                    _configuration["CouchConfig:Password"]).EnsureDatabaseExists();
+                options.UseEndpoint(_configuration["CouchConfig:Endpoint"] ?? "http://couchdb.in.nativecode.com");
+                options.UseBasicAuthentication(
+                    _configuration["CouchConfig:Username"] ?? "admin",
+                    _configuration["CouchConfig:Password"] ?? "");
+                options.EnsureDatabaseExists();
             });
 
             services.AddSingleton<BearerTokenValidator>();

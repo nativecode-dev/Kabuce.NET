@@ -5,22 +5,28 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard, AuthHttpInterceptor, AuthModule} from "@auth0/auth0-angular";
 
+import {ApiModule} from "./api/api.module";
 import {AppComponent} from './app.component';
 import {HomeComponent} from './pages/home/home.component';
 import {AccountComponent} from './pages/account/account.component';
 import {DashboardComponent} from './pages/dashboard/dashboard.component';
 import {AppConfigService} from "./services/app-config.service";
 import {environment} from '../environments/environment';
-import { RegisterComponent } from './pages/register/register.component';
-import { PricingComponent } from './pages/pricing/pricing.component';
-import { SupportComponent } from './pages/support/support.component';
-import { UserComponent } from './components/user/user.component'
+import {RegisterComponent} from './pages/register/register.component';
+import {PricingComponent} from './pages/pricing/pricing.component';
+import {SupportComponent} from './pages/support/support.component';
+import {UserComponent} from './components/user/user.component';
+import {OrganizationComponent} from './pages/organization/organization.component'
 
 const CONFIG_ROUTES: Routes = [
   {path: '', component: HomeComponent, pathMatch: 'full'},
   {path: 'account', component: AccountComponent, canActivate: [AuthGuard]},
   {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   {path: 'home', component: HomeComponent},
+  {path: 'organization', component: OrganizationComponent, canActivate: [AuthGuard]},
+  {path: 'pricing', component: PricingComponent},
+  {path: 'register', component: RegisterComponent},
+  {path: 'support', component: SupportComponent},
 ]
 
 // noinspection SpellCheckingInspection
@@ -34,6 +40,7 @@ const CONFIG_ROUTES: Routes = [
     PricingComponent,
     SupportComponent,
     UserComponent,
+    OrganizationComponent,
   ],
   imports: [
     BrowserModule.withServerTransition(environment.browser),
@@ -41,6 +48,7 @@ const CONFIG_ROUTES: Routes = [
     FormsModule,
     HttpClientModule,
     RouterModule.forRoot(CONFIG_ROUTES),
+    ApiModule.forRoot({rootUrl: ''})
   ],
   providers: [
     AppConfigService,

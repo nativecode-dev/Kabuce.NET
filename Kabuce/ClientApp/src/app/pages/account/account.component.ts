@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
 import {ReplaySubject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import {AccountService} from "../../api/services/account.service";
 
 export interface IUser {
   email: string
@@ -24,7 +25,7 @@ export class AccountComponent implements OnInit {
 
   private readonly users: ReplaySubject<IUser> = new ReplaySubject<IUser>()
 
-  constructor(readonly auth: AuthService, readonly http: HttpClient) {
+  constructor(readonly auth: AuthService, readonly accounts: AccountService) {
   }
 
   ngOnInit(): void {
@@ -36,7 +37,7 @@ export class AccountComponent implements OnInit {
   }
 
   get account() {
-    return this.http.get("/api/accounts")
+    return this.accounts.apiAccountsGet()
   }
 
   get user() {

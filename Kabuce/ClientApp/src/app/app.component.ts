@@ -1,5 +1,6 @@
 import {AuthService} from "@auth0/auth0-angular";
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AccountService} from "./api/services/account.service";
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 export class AppComponent implements OnInit, OnDestroy {
   readonly title: string = 'Kabuce';
 
-  constructor(public readonly auth: AuthService) {
+  constructor(readonly auth: AuthService) {
   }
 
   ngOnInit(): void {
